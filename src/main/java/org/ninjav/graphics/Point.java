@@ -13,4 +13,13 @@ public class Point {
 		this.x += vector.x;
 		this.y += vector.y;
 	}
+
+	public Vector subtract(Point from) {
+		Vector v = new Vector(0f, 0f);
+
+		v.x = this.x - from.x;
+		v.y = this.y - from.y;
+
+		return v;
+	}
 }
