@@ -8,29 +8,35 @@ import org.junit.Test;
 public class ThreeDeeKinematicsTest {
 
     @Test
-    public void nothing() {
+    public void canFindEndEffector() {
         ThreePoint origin = new ThreePoint();
         origin.x = 0;
         origin.y = 0;
         origin.z = 0;
 
-        ThreeDir direction = new ThreeDir();
-        direction.pitch = 0;
-        direction.yaw = 0;
-        direction.roll = 45;
+        ThreeOrientation orientation = new ThreeOrientation();
+        orientation.pitch = 90;
+        orientation.yaw = 0;
+        orientation.roll = 0;
 
         double distance = 1;
 
-        ThreePoint target = threePointFrom(origin, direction, distance);
+        ThreePoint elbow = threePointFrom(origin, orientation, distance);
+        System.out.println("Target: (" + elbow.x + "," + elbow.y + "," + elbow.z + ")");
 
-        System.out.println("Target: (" + target.x + "," + target.y + "," + target.z + ")");
+        ThreePoint wrist = threePointFrom(elbow, orientation, distance);
+        System.out.println("Target: (" + wrist.x + "," + wrist.y + "," + wrist.z + ")");
+
     }
 
-    private ThreePoint threePointFrom(ThreePoint origin, ThreeDir direction, double distance) {
+    private ThreePoint threePointFrom(ThreePoint origin, ThreeOrientation orientation, double distance) {
         ThreePoint result = new ThreePoint();
-        result.x = origin.x + distance * Math.cos(Math.toRadians(direction.yaw)) * Math.cos(Math.toRadians(direction.pitch));
-        result.y = origin.y + distance * Math.sin(Math.toRadians(direction.pitch));
-        result.z = origin.z + distance * Math.sin(Math.toRadians(direction.yaw) * Math.cos(Math.toRadians(direction.pitch)));
+        double yawRad = Math.toRadians(orientation.yaw);
+        double pitchRad = Math.toRadians(orientation.pitch);
+        result.x = origin.x + distance * Math.cos(yawRad) * Math.cos(pitchRad);
+        result.y = origin.y + distance * Math.sin(pitchRad);
+        result.z = origin.z + distance * Math.sin(yawRad) * Math.cos(pitchRad);
+
         return result;
     }
 }

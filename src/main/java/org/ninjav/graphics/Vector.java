@@ -18,17 +18,37 @@ public class Vector {
 		return Math.pow(x, x) + Math.pow(y, y);
 	}
 
-	public Vector multiplyBy(int scalar) {
+	public Vector multiplyBy(float scalar) {
 		Vector v = new Vector(0, 0);
 		v.x = this.x * scalar;
 		v.y = this.y * scalar;
 		return v;
 	}
 
-	public Vector divideBy(int scalar) {
+	public Vector divideBy(float scalar) {
 		Vector v = new Vector(0, 0);
 		v.x = this.x / scalar;
 		v.y = this.y / scalar;
+		return v;
+	}
+
+	public Vector add(Vector arg) {
+		Vector v = new Vector(this.x, this.y);
+		v.x += arg.x;
+		v.y += arg.y;
+		return v;
+	}
+
+	public Vector subtract(Vector arg) {
+		Vector v = new Vector(this.x, this.y);
+		v.x -= arg.x;
+		v.y -= arg.y;
+		return v;
+	}
+
+	public Vector normalized() {
+		Vector v;
+		v = this.divideBy((float)this.length());
 		return v;
 	}
 }
